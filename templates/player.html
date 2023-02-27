@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}
+    Player - 
+{% endblock title %}
+{% block body %}
+<div class="container my-3">
+    <a class="btn btn-primary" href="/" role="button">Go Back</a>
+</div>
+<div class="container my-3 mb-3">
+    <div class="card text-bg-dark text-center">
+        <img src="https://picsum.photos/400/70/?blur" class="card-img" alt="player img">
+        <div class="card-img-overlay text-center">
+          <h3 class="card-title" style="text-transform: capitalize">Title : {{song.title}}</h3>
+          <h5 class="card-text">Artist : {{song.artist}}</h3>
+          <h5 class="card-text">Album : {{song.album}}</h3>
+            <p ><audio controls><source src="{{url_for('static',filename='music/'+song.title+'.mp3')}}" type="audio/mpeg" ></audio></p> 
+          </div>
+      </div>
+</div>
+{% endblock body %}

@@ -1,0 +1,121 @@
+{% extends 'base.html' %} {% block title %} Menu - {% endblock title %} {% block
+body %}
+<div class="container mb-3">
+  {% if allSong|length==0 %}
+
+  <div class="alert alert-dark text-center" role="alert">
+    No Songs in Your library upload now!
+  </div>
+  {% else %}
+  <h3 class="my-3">Songs in Your Library</h3>
+  <table class="table">
+    <thead class="table-light">
+      <tr>
+        <th>Sno</th>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Album</th>
+        <th>Track</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for song in allSong[0:3] %}
+        <tr>
+            <th scope="row">{{loop.index}}</th> <!--This is a counter for listing of todos-->
+            <td>{{song.title}}</td>
+            <td>{{song.artist}}</td>
+            <td>{{song.album}}</td>
+            {% set songtitle = song.title %}
+            <td>
+                <audio controls>
+                    <source src="{{url_for('static',filename='music/'+song.title+'.mp3')}}" type="audio/mpeg">
+                  </audio>
+            </td>
+            <td>
+            <a href="/play/{{song.id}}" type="button" class="btn btn-outline-success btn-sm mx-1">Open</button>
+            <a href="/delete/{{song.id}}" type="button" class="btn btn-outline-danger btn-sm mx-1">Delete</button>
+            </td>
+          </tr>
+        {% endfor %}              
+    </tbody>
+  </table>
+  <div class="text-center">
+    {% if allSong|length>3 %}   
+        <a href="/view" class="btn btn-primary">View All</a>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success container" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<div class="container">
+  
+  {% if flag and flag != "" %}
+  <h3 class="mt-4 mb-3">Search Results for "{{ Title }}"</h3>
+  <table class="table table-striped">
+      <thead>
+          <tr>
+              <th>Title</th>
+              <th>Artist</th>
+              <th>Album</th>
+              <th>Track</th>
+              <th>Action</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for song in flag %}
+          <tr>
+              <td>{{ song.title }}</td>
+              <td>{{ song.artist }}</td>
+              <td>{{ song.album }}</td>
+              <td>
+                  <audio controls>
+                      <source src="{{ url_for('static', filename='music/' + song.title+'.mp3') }}" type="audio/mpeg">
+                  </audio>
+              </td>
+              <td><a href="{{ url_for('delete', id=song.id) }}" class="btn btn-danger">Delete</a></td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+  {% else %}
+  <div class="alert alert-warning" role="alert">
+      No matching songs found.
+  </div>
+  {% endif %}
+</div>
+{% endblock body %}
+{% block menu %}
+<div class="card-group my-3 mx-3 mb-3">
+    <div class="card text-bg-dark text-center" style="width: 18rem;">
+        <div class="card-body">
+        <h5 class="card-title">Upload Your Song</h5>
+        <a href="/upload" class="btn btn-primary">Click Here</a>
+        </div>
+    </div>
+    
+    <div class="card text-bg-dark text-center" style="width: 18rem;">
+      <div class="card-body">
+      <form role="search" action="{{ url_for('Main') }}" method="POST">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" id="search">
+        <button class="btn btn-outline-success my-3" type="submit">Search</button>
+      </form>
+      </div>
+  </div>
+    <div class="card text-bg-dark text-center" style="width: 18rem;">
+        <div class="card-body">
+        <h5 class="card-title">Menu</h5>
+        <a href="/" class="btn btn-primary">Click Here</a>
+        </div>
+    </div>
+</div>
+
+{% endblock menu %}

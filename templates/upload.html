@@ -1,0 +1,55 @@
+{% extends 'base.html' %}{% block title %} Upload - {% endblock title %}
+
+{% block body %}
+<div class="container mb-3 ">
+    <h2>Upload Your song</h2>
+<form action="{{ url_for('upload_song') }}" enctype="multipart/form-data" method="POST">
+    <div class="mb-3">
+      <label for="title" class="form-label">Title: </label>
+      <input type="text" class="form-control" id="title" name="title" aria-describedby="titleHelp" required>
+      <div id="titleHelp" class="form-text">Enter title of your song</div>
+    </div>
+    <div class="mb-3">
+      <label for="artist" class="form-label">Artist: </label>
+      <input type="text" class="form-control" id="artist" name="artist" required>
+    </div>
+    <div class="mb-3">
+      <label for="album" class="form-label">Album: </label>
+      <input type="text" class="form-control" id="album" name="album" required>
+    </div>
+    <div class="mb-3">
+      <label for="song" class="form-label">Upload: </label>
+      <input type="file" name="song" id="song" accept=".mp3,.wav" aria-describedby="songHelp" required>
+      <div id="songHelp" class="form-text">Choose file from local device</div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success container" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+{% endblock body %}
+{% block menu %}
+<div class="card-group my-3 mx-3 mb-3">
+    <div class="card text-bg-dark text-center" style="width: 18rem;">
+        <div class="card-body">
+        <h5 class="card-title">Upload Your Song</h5>
+        <a href="/upload" class="btn btn-primary">Click Here</a>
+        </div>
+    </div>
+    
+    <div class="card text-bg-dark text-center" style="width: 18rem;">
+        <div class="card-body">
+        <h5 class="card-title">Menu</h5>
+        <a href="/" class="btn btn-primary">Click Here</a>
+        </div>
+    </div>
+</div>
+{% endblock menu %}

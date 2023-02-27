@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}
+    View - 
+{% endblock title %}
+{% block body %}
+<div class="container my-3">
+<a class="btn btn-primary" href="/" role="button">Go Back</a>
+<div class="row text-center my-3">
+    {% for song in allSong %}
+    <div class="col-sm-6 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title" style="text-transform: capitalize">{{song.title}}</h5>
+            
+            <hr>
+            <p class="card-text">Artist: {{song.artist}}</p>
+            <p class="card-text">Album: {{song.album}}</p>
+            <p><audio controls><source src="{{url_for('static',filename='music/'+song.title+'.mp3')}}" type="audio/mpeg" ></audio></p> 
+            <a href="/play/{{song.id}}" type="button" class="btn btn-success btn-sm mx-1">Open</a>
+            <a href="/delete/{{song.id}}" type="button" class="btn btn-danger mx-1 btn-sm">Delete</a>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock body %}
